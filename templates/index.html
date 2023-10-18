@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset=utf-8>
+    <meta name="theme-color" content="#333641">
+    <title>PCOS Prediction</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+
+  @keyframes reveal {
+    80%{
+      letter-spacing: 8px;
+    }
+    100% {
+      background-size: 300% 300%;
+    }
+  }
+  @keyframes glow {
+    40% {
+      text-shadow: 0 0 8px #fff;
+    }
+  }
+}  
+          body {
+            
+            font: 100% / 1.5 Raleway, sans-serif;
+            color: black;
+            background: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-top: 100px;
+            padding: 20px;
+            overflow-y: scroll;
+          }        
+          h1 {
+            margin: auto;
+            font:Raleway, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 200;
+            background:black;
+            radial-gradient(ellipse at bottom, #fff, transparent, transparent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: white;
+            font-family: "Source Sans Pro", sans-serif;
+            animation: reveal 3000ms ease-in-out forwards 200ms,
+            glow 2500ms linear infinite 2000ms;    
+            position: relative; /* Add position relative to h1 */
+            z-index: 2;
+            padding:20px;    
+          }
+          .header {
+            position: fixed;
+            background:black;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0px 0;
+            text-align: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="header">
+            <h1>Polycystic Ovary Syndrome (PCOS) Prediction </h1>
+        </div>
+        <h4 style="margin-top:110px"> Answer the questions below to obtain a prediction on PCOS:</h4>
+        <br>
+        <form id="pcosForm" method="POST" action="/">
+            <div class="form-group">
+                <label for="follicle_r">Enter the amount of follicles on your right ovary:</label>
+                <input type="number" class="form-control" id="follicle_r" name="follicle_r" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="follicle_r_error">
+                    Please enter a valid follicle amount.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="follicle_l">Enter the amount of follicles on your left ovary:</label>
+                <input type="number" class="form-control" id="follicle_l" name="follicle_l" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="follicle_l_error">
+                    Please enter a valid follicle amount.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="skin">Do you experience skin darkening especially at the folds of your skin?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes" name="skin" value="1" required>
+                    <label class="form-check-label" for="yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no" name="skin" value="0" required>
+                    <label class="form-check-label" for="no">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hair_g">Do you experience excessive hair growth on your body(hirsutism)? </label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes1" name="hair_g" value="1" required>
+                    <label class="form-check-label" for="yes1">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no1" name="hair_g" value="0" required>
+                    <label class="form-check-label" for="no1">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="weight_g">Have you experienced weight gain?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes2" name="weight_g" value="1" required>
+                    <label class="form-check-label" for="yes2">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no2" name="weight_g" value="0" required>
+                    <label class="form-check-label" for="no2">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cycle">Is your menstrual cycle regular or irregular?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="cycleRegular" name="cycle" value="2" required>
+                    <label class="form-check-label" for="cycleRegular">Regular</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="cycleIrregular" name="cycle" value="4" required>
+                    <label class="form-check-label" for="cycleIrregular">Irregular</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="fast_food">Do you consume fast food?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes3" name="fast_food" value="1" required>
+                    <label class="form-check-label" for="yes3">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no3" name="fast_food" value="0" required>
+                    <label class="form-check-label" for="no3">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pimples">Do you have pimples?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes4" name="pimples" value="1" required>
+                    <label class="form-check-label" for="yes4">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no4" name="pimples" value="0" required>
+                    <label class="form-check-label" for="no4">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hair_loss">Do you experience hair loss?</label>
+                &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="yes5" name="hair_loss" value="1" required>
+                    <label class="form-check-label" for="yes5">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="no5" name="hair_loss" value="0" required>
+                    <label class="form-check-label" for="no5">No</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="amh_input">Enter the amount of AMH(Anti-Mullerian Hormone)(ng/mL) in your blood sample:</label>
+                <input type="number" class="form-control" id="amh_input" name="amh_input" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="amherror">
+                    Please enter a valid value.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="weight_kg">Enter your weight in kg:</label>
+                <input type="number" class="form-control" id="weight_kg" name="weight_kg" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="weighterror">
+                    Please enter a valid weight.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="height_cm">Enter your height in cm:</label>
+                <input type="number" class="form-control" id="height_cm" name="height_cm" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="heighterror">
+                    Please enter a valid height.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bmi">Your Calculated BMI:</label>
+                <input type="number" class="form-control" id="bmi" name="bmi" min="0" step="0.01" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="waist">Enter the measurement of your waist in inches:</label>
+                <input type="number" class="form-control" id="waist" name="waist" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="waisterror">
+                    Please enter a valid waist size.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="hip">Enter the measurement of your hip in inches:</label>
+                <input type="number" class="form-control" id="hip" name="hip" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="hiperror">
+                    Please enter a valid hip size.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="avg_f_size_l">Enter the average size of the follicles on your left ovary (mm): </label>
+                <input type="number" class="form-control" id="avg_f_size_l" name="avg_f_size_l" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="f_l_error">
+                    Please enter a valid size.
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endometrium">Enter the thickness of your endometrium (mm):</label>
+                <input type="number" class="form-control" id="endometrium" name="endometrium" min="0" step="0.01" required>
+                <div class="invalid-feedback" id="enderror">
+                    Please enter a valid value.
+                </div>
+            </div>
+            <br>
+            <center><button type="submit" class="btn btn-dark">Predict</button></center>
+            <br>
+            <br>
+        </form>
+    </div>
+
+
+    <!-- Add Bootstrap JS and jQuery (required for Bootstrap) links -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script>
+        window.addEventListener('beforeunload', function () {
+            window.scrollTo(0, 0);
+        });
+        // JavaScript for form validation
+        document.getElementById('pcosForm').addEventListener('submit', function(event) {
+            const form = event.target;
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                scrollFirstErrorIntoView(form);
+
+            }
+            form.classList.add('was-validated');
+        });
+        const weightInput = document.getElementById('weight_kg');
+        const heightInput = document.getElementById('height_cm');
+        const bmiInput = document.getElementById('bmi');
+
+        // Function to calculate BMI
+        function calculateBMI() {
+            const weightKg = parseFloat(weightInput.value);
+            const heightCm = parseFloat(heightInput.value);
+
+            // Calculate BMI (BMI = weight (kg) / (height (m) * height (m)))
+            const heightM = heightCm / 100;
+            const bmi = (weightKg / (heightM * heightM)).toFixed(2);
+
+            // Display the calculated BMI in the "BMI" input box
+            bmiInput.value = bmi;
+        }
+
+        // Add input event listeners to trigger BMI calculation
+        weightInput.addEventListener('input', calculateBMI);
+        heightInput.addEventListener('input', calculateBMI);
+
+        function scrollFirstErrorIntoView(form) {
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        const follicleRInput = document.getElementById('follicle_r');
+        follicleRInput.addEventListener('input', function() {
+            const value = parseFloat(follicleRInput.value);
+            if (value < 0 || value > 30) {
+                follicleRInput.setCustomValidity('Please enter a value between 0 and 30.');
+                follicleRInput.classList.add('is-invalid');
+            } else {
+                follicleRInput.setCustomValidity('');
+                follicleRInput.classList.remove('is-invalid');
+            }
+        });
+        const follicleLInput = document.getElementById('follicle_l');
+        follicleLInput.addEventListener('input', function() {
+            const value = parseFloat(follicleLInput.value);
+            if (value < 0 || value > 30) {
+                follicleLInput.setCustomValidity('Please enter a value between 0 and 30.');
+                follicleLInput.classList.add('is-invalid');
+            } else {
+                follicleLInput.setCustomValidity('');
+                follicleLInput.classList.remove('is-invalid');
+            }
+        });
+        const WeightInput = document.getElementById('weight_kg');
+        WeightInput.addEventListener('input', function() {
+            const value = parseFloat(WeightInput.value);
+            if (value < 20|| value > 730) {
+                WeightInput.setCustomValidity('Please enter a valid weight');
+                WeightInput.classList.add('is-invalid');
+            } else {
+                WeightInput.setCustomValidity('');
+                WeightInput.classList.remove('is-invalid');
+            }
+        });
+        const HeightInput = document.getElementById('height_cm');
+        HeightInput.addEventListener('input', function() {
+            const value = parseFloat(HeightInput.value);
+            if (value < 63|| value > 216) {
+                HeightInput.setCustomValidity('Please enter a valid height');
+                HeightInput.classList.add('is-invalid');
+            } else {
+                HeightInput.setCustomValidity('');
+                HeightInput.classList.remove('is-invalid');
+            }
+        });
+        const amhInput = document.getElementById('amh_input');
+        amhInput.addEventListener('input', function() {
+            const value = parseFloat(amhInput.value);
+            if (value < 0.1|| value > 26.0) {
+                amhInput.setCustomValidity('Please enter a valid value');
+                amhInput.classList.add('is-invalid');
+            } else {
+                amhInput.setCustomValidity('');
+                amhInput.classList.remove('is-invalid');
+            }
+        });
+        const WaistInput = document.getElementById('waist');
+        WaistInput.addEventListener('input', function() {
+            const value = parseFloat(WaistInput.value);
+            if (value < 20|| value > 70) {
+                WaistInput.setCustomValidity('Please enter a valid size');
+                WaistInput.classList.add('is-invalid');
+            } else {
+                WaistInput.setCustomValidity('');
+                WaistInput.classList.remove('is-invalid');
+            }
+        });
+        const HipInput = document.getElementById('hip');
+        HipInput.addEventListener('input', function() {
+            const value = parseFloat(HipInput.value);
+            if (value < 20|| value > 80) {
+                HipInput.setCustomValidity('Please enter a valid size');
+                HipInput.classList.add('is-invalid');
+            } else {
+                HipInput.setCustomValidity('');
+                HipInput.classList.remove('is-invalid');
+            }
+        });
+        const EndInput = document.getElementById('endometrium');
+        EndInput.addEventListener('input', function() {
+            const value = parseFloat(EndInput.value);
+            if (value < 0|| value > 20) {
+                EndInput.setCustomValidity('Please enter a valid size');
+                EndInput.classList.add('is-invalid');
+            } else {
+                EndInput.setCustomValidity('');
+                EndInput.classList.remove('is-invalid');
+            }
+        });
+        const avglInput = document.getElementById('avg_f_size_l');
+        avglInput.addEventListener('input', function() {
+            const value = parseFloat(avglInput.value);
+            if (value < 0|| value > 30) {
+                avglInput.setCustomValidity('Please enter a valid size');
+                avglInput.classList.add('is-invalid');
+            } else {
+                avglInput.setCustomValidity('');
+                avglInput.classList.remove('is-invalid');
+            }
+        });
+    </script>
+</body>
+</html>
